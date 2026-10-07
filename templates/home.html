@@ -1,0 +1,60 @@
+{% extends "base_mobile.html" %}
+{% block content %}
+<div class="p-4">
+  <h2 class="text-xl font-bold text-slate-800">Good morning, Ramesh 👋</h2>
+  <p class="text-sm text-gray-500 mb-4">What do you want to do today?</p>
+
+  <div class="grid grid-cols-3 gap-3">
+    <a href="/report/new?cat=garbage" class="bg-white p-4 rounded-xl shadow tap flex flex-col items-center">
+      <div class="text-2xl">🗑️</div><div class="text-xs mt-1 font-medium">Garbage</div>
+    </a>
+    <a href="/report/new?cat=pothole" class="bg-white p-4 rounded-xl shadow tap flex flex-col items-center">
+      <div class="text-2xl">🕳️</div><div class="text-xs mt-1 font-medium">Pothole</div>
+    </a>
+    <a href="/report/new?cat=streetlight" class="bg-white p-4 rounded-xl shadow tap flex flex-col items-center">
+      <div class="text-2xl">💡</div><div class="text-xs mt-1 font-medium">Streetlight</div>
+    </a>
+    <a href="/report/new?cat=power" class="bg-white p-4 rounded-xl shadow tap flex flex-col items-center">
+      <div class="text-2xl">⚡</div><div class="text-xs mt-1 font-medium">Power</div>
+    </a>
+    <a href="/report/new?cat=drainage" class="bg-white p-4 rounded-xl shadow tap flex flex-col items-center">
+      <div class="text-2xl">💧</div><div class="text-xs mt-1 font-medium">Drainage</div>
+    </a>
+    <a href="/report/new?cat=suggestion" class="bg-white p-4 rounded-xl shadow tap flex flex-col items-center">
+      <div class="text-2xl">💬</div><div class="text-xs mt-1 font-medium">Suggestion</div>
+    </a>
+  </div>
+
+  <div class="flex justify-between items-center mt-6 mb-2">
+    <h3 class="font-bold text-slate-800">My Reports</h3>
+    <a href="/reports" class="text-blue-600 text-sm">See all →</a>
+  </div>
+  <div class="space-y-2">
+    {% for r in reports %}
+    <a href="/reports/{{ r.id }}" class="block bg-white p-3 rounded-xl shadow">
+      <div class="flex justify-between items-start">
+        <span class="font-semibold capitalize text-slate-800">{{ r.category }}</span>
+        <span class="text-xs px-2 py-1 rounded-full {{ status_class(r.status) }}">{{ r.status }}</span>
+      </div>
+      <div class="text-xs text-gray-500 mt-1">{{ r.title }}</div>
+    </a>
+    {% endfor %}
+  </div>
+
+  <h3 class="font-bold text-slate-800 mt-6 mb-2">For You</h3>
+  {% if scheme %}
+  <a href="/schemes/{{ scheme.id }}" class="block bg-gradient-to-r from-blue-50 to-blue-100 p-3 rounded-xl shadow mb-2">
+    <div class="text-xs text-blue-700 font-semibold">🏛️ SCHEME</div>
+    <div class="font-semibold text-slate-800">{{ scheme.name }}</div>
+    <div class="text-xs text-gray-600">{{ scheme.description }}</div>
+  </a>
+  {% endif %}
+  {% if job %}
+  <a href="/jobs/{{ job.id }}" class="block bg-gradient-to-r from-green-50 to-green-100 p-3 rounded-xl shadow">
+    <div class="text-xs text-green-700 font-semibold">💼 JOB NEAR YOU</div>
+    <div class="font-semibold text-slate-800">{{ job.title }}</div>
+    <div class="text-xs text-gray-600">{{ job.wage }} • {{ job.skill }}</div>
+  </a>
+  {% endif %}
+</div>
+{% endblock %}

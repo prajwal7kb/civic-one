@@ -1,0 +1,76 @@
+{% extends "base_desktop.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+
+<div class="grid grid-cols-4 gap-4 mb-6">
+  <div class="bg-white p-4 rounded-xl shadow">
+    <div class="text-sm text-gray-500">Total Reports</div>
+    <div class="text-3xl font-bold text-slate-800">{{ total }}</div>
+  </div>
+  <div class="bg-white p-4 rounded-xl shadow border-l-4 border-orange-500">
+    <div class="text-sm text-gray-500">Submitted</div>
+    <div class="text-3xl font-bold text-orange-600">{{ submitted }}</div>
+  </div>
+  <div class="bg-white p-4 rounded-xl shadow border-l-4 border-blue-500">
+    <div class="text-sm text-gray-500">In Progress</div>
+    <div class="text-3xl font-bold text-blue-600">{{ progress }}</div>
+  </div>
+  <div class="bg-white p-4 rounded-xl shadow border-l-4 border-green-500">
+    <div class="text-sm text-gray-500">Resolved</div>
+    <div class="text-3xl font-bold text-green-600">{{ resolved }}</div>
+  </div>
+</div>
+
+<div class="grid grid-cols-3 gap-4">
+  <div class="col-span-2 bg-white p-4 rounded-xl shadow">
+    <h3 class="font-bold text-slate-800 mb-3">Live Issue Map</h3>
+    <div id="map" style="height: 400px;" class="rounded-lg"></div>
+  </div>
+  <div class="bg-white p-4 rounded-xl shadow">
+    <h3 class="font-bold text-slate-800 mb-3">Recent Complaints</h3>
+    <div class="space-y-2" id="recent"></div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+const map = L.map('map').setView([12.9716, 77.5946], 13);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+function color(s) {
+  if (s === 'Resolved') return 'green';
+  if (s === 'In Progress') return 'blue';
+  if (s === 'Acknowledged') return 'orange';
+  return 'red';
+}
+
+function load() {
+  fetch('/api/reports').then(r => r.json()).then(data => {
+    map.eachLayer(l => { if (l instanceof L.Marker) map.removeLayer(l); });
+    data.forEach(r => {
+      if (!r.lat || !r.lng) return;
+      const icon = L.divIcon({
+        className: '',
+        html: `<div style="background:${color(r.status)};width:18px;height:18px;border-radius:50%;border:2px solid white;box-shadow:0 0 6px rgba(0,0,0,.5)"></div>`,
+        iconSize: [18, 18]
+      });
+      L.marker([r.lat, r.lng], {icon}).addTo(map)
+        .bindPopup(`<b>#C${String(r.id).padStart(4,'0')} ${r.category}</b><br>${r.title}<br><i>${r.status}</i>`);
+    });
+    document.getElementById('recent').innerHTML = data.slice(0, 6).map(r => `
+      <a href="/admin/complaints/${r.id}" class="block p-2 rounded hover:bg-gray-50 border-b">
+        <div class="flex justify-between">
+          <span class="text-sm font-medium capitalize">${r.category}</span>
+          <span class="text-xs">${r.status}</span>
+        </div>
+        <div class="text-xs text-gray-500">${r.title}</div>
+      </a>
+    `).join('');
+  });
+}
+load();
+setInterval(load, 5000);
+</script>
+{% endblock %}

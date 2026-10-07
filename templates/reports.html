@@ -1,0 +1,18 @@
+{% extends "base_mobile.html" %}
+{% block content %}
+<div class="p-4">
+  <h2 class="text-xl font-bold text-slate-800 mb-3">All Reports</h2>
+  <div class="space-y-2">
+    {% for r in reports %}
+    <a href="/reports/{{ r.id }}" class="block bg-white p-3 rounded-xl shadow">
+      <div class="flex justify-between items-start">
+        <span class="font-semibold capitalize text-slate-800">{{ r.category }}</span>
+        <span class="text-xs px-2 py-1 rounded-full {{ status_class(r.status) }}">{{ r.status }}</span>
+      </div>
+      <div class="text-sm text-slate-700 mt-1">{{ r.title }}</div>
+      <div class="text-xs text-gray-400 mt-1">{{ r.created_at }} • 👍 {{ r.upvotes }}</div>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "base_mobile.html" %}
+{% block content %}
+<form action="/report/new" method="POST" enctype="multipart/form-data" class="p-4 space-y-4">
+  <h2 class="text-xl font-bold capitalize text-slate-800">Report {{ cat }}</h2>
+  <input type="hidden" name="category" value="{{ cat }}">
+
+  <div>
+    <label class="text-sm font-semibold text-slate-700">Title</label>
+    <input name="title" required class="w-full p-3 border rounded-lg mt-1" placeholder="Brief title">
+  </div>
+
+  <div>
+    <label class="text-sm font-semibold text-slate-700">Description</label>
+    <textarea name="description" rows="3" class="w-full p-3 border rounded-lg mt-1" placeholder="Describe the issue..."></textarea>
+  </div>
+
+  <div>
+    <label class="text-sm font-semibold text-slate-700">Photo</label>
+    <input type="file" name="photo" accept="image/*" capture="environment"
+           class="w-full p-2 border rounded-lg bg-white mt-1">
+  </div>
+
+  <div>
+    <label class="text-sm font-semibold text-slate-700">Location</label>
+    <button type="button" onclick="getLoc()" class="w-full p-3 bg-gray-200 rounded-lg mt-1 font-medium">📍 Get my location</button>
+    <input type="hidden" name="lat" id="lat">
+    <input type="hidden" name="lng" id="lng">
+    <div id="loc-status" class="text-xs text-gray-500 mt-1">Not captured yet</div>
+  </div>
+
+  <button class="w-full bg-blue-600 text-white p-4 rounded-lg font-semibold tap">Submit Report</button>
+</form>
+
+<script>
+function getLoc() {
+  const s = document.getElementById('loc-status');
+  s.innerText = 'Locating...';
+  navigator.geolocation.getCurrentPosition(pos => {
+    document.getElementById('lat').value = pos.coords.latitude;
+    document.getElementById('lng').value = pos.coords.longitude;
+    s.innerText = `✅ ${pos.coords.latitude.toFixed(4)}, ${pos.coords.longitude.toFixed(4)}`;
+  }, () => { s.innerText = '❌ Location denied. You can still submit.'; });
+}
+</script>
+{% endblock %}

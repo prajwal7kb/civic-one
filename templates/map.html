@@ -1,0 +1,44 @@
+{% extends "base_mobile.html" %}
+{% block content %}
+<div class="p-4">
+  <h2 class="text-xl font-bold text-slate-800 mb-3">Public Map</h2>
+  <div class="flex gap-2 text-xs mb-3">
+    <span class="px-2 py-1 rounded-full bg-orange-100 text-orange-700">Pending</span>
+    <span class="px-2 py-1 rounded-full bg-blue-100 text-blue-700">In Progress</span>
+    <span class="px-2 py-1 rounded-full bg-green-100 text-green-700">Resolved</span>
+  </div>
+  <div id="map" class="w-full rounded-xl shadow" style="height: 70vh;"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const map = L.map('map').setView([12.9716, 77.5946], 13);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+function color(status) {
+  if (status === 'Resolved') return 'green';
+  if (status === 'In Progress') return 'blue';
+  if (status === 'Acknowledged') return 'orange';
+  return 'red';
+}
+
+function loadPins() {
+  fetch('/api/reports').then(r => r.json()).then(data => {
+    data.forEach(r => {
+      if (!r.lat || !r.lng) return;
+      const c = color(r.status);
+      const icon = L.divIcon({
+        className: '',
+        html: `<div style="background:${c};width:16px;height:16px;border-radius:50%;border:2px solid white;box-shadow:0 0 4px rgba(0,0,0,.4)"></div>`,
+        iconSize: [16, 16]
+      });
+      L.marker([r.lat, r.lng], {icon}).addTo(map)
+        .bindPopup(`<b>${r.category}</b><br>${r.title}<br><i>${r.status}</i>`);
+    });
+  });
+}
+loadPins();
+setInterval(() => { map.eachLayer(l => { if (l instanceof L.Marker) map.removeLayer(l); }); loadPins(); }, 5000);
+</script>
+{% endblock %}

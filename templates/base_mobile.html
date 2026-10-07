@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link rel="manifest" href="/static/manifest.json">
+<title>CivicOne</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  .tap { min-height: 44px; }
+</style>
+</head>
+<body class="bg-gray-50 pb-20">
+
+<div class="bg-blue-600 text-white px-4 py-3 flex justify-between items-center sticky top-0 z-50 shadow">
+  <a href="/" class="font-bold text-lg">CivicOne</a>
+  <div class="text-xs bg-blue-700 px-2 py-1 rounded">📍 Ward 12</div>
+</div>
+
+<nav class="fixed bottom-0 left-0 right-0 bg-white border-t flex justify-around py-2 z-50 shadow-lg">
+  <a href="/" class="text-center text-xs text-gray-700 flex-1">
+    <div class="text-xl">🏠</div>Home
+  </a>
+  <a href="/report/new" class="text-center text-xs text-gray-700 flex-1">
+    <div class="text-xl">📢</div>Report
+  </a>
+  <a href="/services" class="text-center text-xs text-gray-700 flex-1">
+    <div class="text-xl">🧾</div>Services
+  </a>
+  <a href="/map" class="text-center text-xs text-gray-700 flex-1">
+    <div class="text-xl">🗺️</div>Map
+  </a>
+</nav>
+
+{% block content %}{% endblock %}
+
+{% block scripts %}{% endblock %}
+</body>
+</html>

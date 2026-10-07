@@ -1,0 +1,13 @@
+{% extends "base_mobile.html" %}
+{% block content %}
+<div class="p-4">
+  <a href="/jobs" class="text-blue-600 text-sm">← Back</a>
+  <div class="bg-white rounded-xl shadow p-4 mt-3">
+    <h2 class="text-xl font-bold text-slate-800">{{ j.title }}</h2>
+    <div class="text-sm text-gray-500 mt-1">{{ j.skill }}</div>
+    <div class="text-lg font-bold text-green-700 mt-3">{{ j.wage }}</div>
+    <p class="text-slate-700 mt-3">{{ j.description }}</p>
+    <a href="tel:{{ j.contact }}" class="block text-center bg-green-600 text-white p-3 rounded-lg mt-4 font-semibold tap">📞 Call {{ j.contact }}</a>
+  </div>
+</div>
+{% endblock %}

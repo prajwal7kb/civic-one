@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<title>Admin — CivicOne</title>
+</head>
+<body class="bg-gray-100 flex h-screen overflow-hidden">
+
+<aside class="w-60 bg-slate-800 text-white p-4 flex flex-col">
+  <div class="font-bold text-xl mb-6">🏛 CivicOne</div>
+  <nav class="space-y-1 flex-1">
+    <a href="/admin" class="block p-2 rounded hover:bg-slate-700">📊 Dashboard</a>
+    <a href="/admin/complaints" class="block p-2 rounded hover:bg-slate-700">📋 Complaints</a>
+    <a href="/admin/complaints?status=Submitted" class="block p-2 rounded hover:bg-slate-700 pl-8 text-sm text-slate-300">New</a>
+    <a href="/admin/complaints?status=In Progress" class="block p-2 rounded hover:bg-slate-700 pl-8 text-sm text-slate-300">In Progress</a>
+    <a href="/admin/complaints?status=Resolved" class="block p-2 rounded hover:bg-slate-700 pl-8 text-sm text-slate-300">Resolved</a>
+  </nav>
+  <a href="/" class="block p-2 rounded hover:bg-slate-700 text-sm">📱 Citizen View</a>
+</aside>
+
+<main class="flex-1 overflow-auto">
+  <div class="bg-white shadow px-6 py-4 flex justify-between items-center sticky top-0 z-40">
+    <h1 class="text-xl font-bold text-slate-800">{% block title %}Dashboard{% endblock %}</h1>
+    <div class="text-sm text-gray-500">Municipal Admin</div>
+  </div>
+  <div class="p-6">{% block content %}{% endblock %}</div>
+</main>
+
+{% block scripts %}{% endblock %}
+</body>
+</html>

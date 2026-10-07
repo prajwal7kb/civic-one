@@ -1,0 +1,14 @@
+{% extends "base_mobile.html" %}
+{% block content %}
+<form action="/jobs/new" method="POST" class="p-4 space-y-3">
+  <h2 class="text-xl font-bold text-slate-800">Post a Job</h2>
+  <input name="title" required placeholder="Job title" class="w-full p-3 border rounded-lg">
+  <input name="skill" required placeholder="Skill (e.g. Plumbing)" class="w-full p-3 border rounded-lg">
+  <input name="wage" required placeholder="Wage (e.g. ₹600/day)" class="w-full p-3 border rounded-lg">
+  <input name="contact" required placeholder="Contact number" class="w-full p-3 border rounded-lg">
+  <textarea name="description" rows="3" placeholder="Description" class="w-full p-3 border rounded-lg"></textarea>
+  <input type="hidden" name="lat" value="12.97">
+  <input type="hidden" name="lng" value="77.59">
+  <button class="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold tap">Post Job</button>
+</form>
+{% endblock %}

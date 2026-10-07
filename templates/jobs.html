@@ -1,0 +1,30 @@
+{% extends "base_mobile.html" %}
+{% block content %}
+<div class="p-4">
+  <div class="flex justify-between items-center mb-3">
+    <h2 class="text-xl font-bold text-slate-800">Jobs Near You</h2>
+    <a href="/jobs/new" class="bg-blue-600 text-white text-sm px-3 py-2 rounded-lg">+ Post</a>
+  </div>
+
+  <form method="GET" class="mb-3">
+    <select name="skill" onchange="this.form.submit()" class="w-full p-3 border rounded-lg bg-white">
+      <option value="">All skills</option>
+      {% for s in skills %}
+      <option value="{{ s.skill }}" {% if selected == s.skill %}selected{% endif %}>{{ s.skill }}</option>
+      {% endfor %}
+    </select>
+  </form>
+
+  <div class="space-y-2">
+    {% for j in jobs %}
+    <a href="/jobs/{{ j.id }}" class="block bg-white p-3 rounded-xl shadow">
+      <div class="flex justify-between items-start">
+        <div class="font-semibold text-slate-800">{{ j.title }}</div>
+        <div class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">{{ j.wage }}</div>
+      </div>
+      <div class="text-xs text-gray-500 mt-1">{{ j.skill }} • {{ j.description }}</div>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

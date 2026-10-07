@@ -1,0 +1,36 @@
+{% extends "base_mobile.html" %}
+{% block content %}
+<div class="p-4">
+  <h2 class="text-xl font-bold text-slate-800 mb-4">Services</h2>
+  <div class="space-y-3">
+    <a href="/schemes" class="block bg-white p-4 rounded-xl shadow flex items-center gap-3">
+      <div class="text-3xl">🏛️</div>
+      <div>
+        <div class="font-semibold text-slate-800">Government Schemes</div>
+        <div class="text-xs text-gray-500">Browse welfare schemes</div>
+      </div>
+    </a>
+    <a href="/scholarships" class="block bg-white p-4 rounded-xl shadow flex items-center gap-3">
+      <div class="text-3xl">🎓</div>
+      <div>
+        <div class="font-semibold text-slate-800">Scholarship Checker</div>
+        <div class="text-xs text-gray-500">Find scholarships you qualify for</div>
+      </div>
+    </a>
+    <a href="/career" class="block bg-white p-4 rounded-xl shadow flex items-center gap-3">
+      <div class="text-3xl">🧭</div>
+      <div>
+        <div class="font-semibold text-slate-800">Career Guidance</div>
+        <div class="text-xs text-gray-500">Tests, courses, placements</div>
+      </div>
+    </a>
+    <a href="/jobs" class="block bg-white p-4 rounded-xl shadow flex items-center gap-3">
+      <div class="text-3xl">💼</div>
+      <div>
+        <div class="font-semibold text-slate-800">Jobs Near You</div>
+        <div class="text-xs text-gray-500">Daily-wage & skill work</div>
+      </div>
+    </a>
+  </div>
+</div>
+{% endblock %}
